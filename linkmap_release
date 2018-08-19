@@ -1,0 +1,45 @@
+MEMORY 
+{
+        rom  : ORIGIN = 0x00000000, LENGTH = 64k
+        ram  : ORIGIN = 0x00800000, LENGTH = 256k
+    ext_ram  : ORIGIN = 0x80800000, LENGTH = 1024k
+     eflash  : ORIGIN = 0x00400000, LENGTH = 1280k
+}
+
+STACK_LOCATION = 0x83fffc ;
+
+
+SECTIONS 
+{
+        .text_entry   : { 
+        					VECTOR_LOCATION = .;
+							KEEP(*vector_table.o(.rodata*));
+                        } >eflash
+
+        .rodata :       {
+						  *( .rodata*);
+                        } >eflash
+
+        .text   :       {
+                          *( .text*);
+						  . = ALIGN(16);  
+                          _end_text = .;
+                        } >eflash = 0xbebe
+
+        .data   :    	AT(_end_text)
+                        { _start_data = .;
+                          *( .data );
+						  . = ALIGN(4);  
+                          _end_data = .; 
+                        } >ram
+
+        .bss    :       { _bss_start = .; 
+                          *( .bss ) *(COMMON); 
+                          . = . + 0x08;
+                          _bss_end = .;
+                        } >ram
+}
+
+PROVIDE (_end = STACK_LOCATION - 0x1000);
+        
+

@@ -1,0 +1,8 @@
+/Debug/*
+!/Debug/makefile
+!/Debug/objects.mk
+!/Debug/sources.mk
+/Release/*
+!/Release/makefile
+!/Release/objects.mk
+!/Release/sources.mk
