@@ -51,7 +51,7 @@ all: A5(ET300)_CommonDemo.elf
 A5(ET300)_CommonDemo.elf: $(OBJS) $(USER_OBJS) ../linkmap_release
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross GCC Linker'
-	mcore-elf-ld -EL --gc-sections -L"C:\CCore_IDE/tool-chain/ccore-elf/mcore-elf/lib/c0_div" -L"C:\CCore_IDE/tool-chain/ccore-elf/lib/gcc/mcore-elf/4.6.0/c0_div" -L"E:\001_工作\800_SVN\客户开发包发布\A5(ET300)\V1.1\Demo\A5(ET300)_CommonDemo\src\drv\lib" -e __start -N -t -warn-common -Map A5(ET300)_CommonDemo.map -T../linkmap_release -o "A5(ET300)_CommonDemo.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	mcore-elf-ld -EL --gc-sections -L"C:\CCore_IDE/tool-chain/ccore-elf/mcore-elf/lib/c0_div" -L"C:\CCore_IDE/tool-chain/ccore-elf/lib/gcc/mcore-elf/4.6.0/c0_div" -L"C:\CCore_IDE\ccore-eclipse\workspace\A5(ET300)_CommonDemo\src\drv\lib" -e __start -N -t -warn-common -Map A5(ET300)_CommonDemo.map -T../linkmap_release -o "A5(ET300)_CommonDemo.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 	$(MAKE) --no-print-directory post-build

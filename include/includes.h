@@ -17,4 +17,6 @@
 #include "iomacros.h"
 #include "debug.h"
 
+typedef UINT8 u8;
+typedef UINT32 u32;
 #endif /* __INCLUDES_H__ */

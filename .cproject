@@ -44,6 +44,10 @@
 								<option command="-mlittle-endian" id="gnu.c.compiler.option.endian.1338015161" name="CPU Endian" superClass="gnu.c.compiler.option.endian" value="Little Endian(-mlittle-endian)" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.warnings.allwarn.1186099958" name="All warnings (-Wall)" superClass="gnu.c.compiler.option.warnings.allwarn" value="true" valueType="boolean"/>
 								<option id="gnu.c.compiler.option.misc.other.1879088642" name="Other flags" superClass="gnu.c.compiler.option.misc.other" value="-c" valueType="string"/>
+								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1855486623" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="CONF_DEBUG"/>
+								</option>
+								<option id="gnu.c.compiler.option.preprocessor.undef.symbol.1176094957" name="Undefined symbols (-U)" superClass="gnu.c.compiler.option.preprocessor.undef.symbol" valueType="undefDefinedSymbols"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.2127285246" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.78374513" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler">
@@ -94,6 +98,28 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
+					<folderInfo id="cdt.managedbuild.config.gnu.cross.exe.debug.2038886649.1301139943" name="/" resourcePath="Release">
+						<toolChain id="cdt.managedbuild.toolchain.gnu.cross.exe.debug.1842594764" name="Cross GCC" superClass="cdt.managedbuild.toolchain.gnu.cross.exe.debug" unusedChildren="">
+							<option id="cdt.managedbuild.option.gnu.cross.prefix.973432646.1388283401" name="Prefix" superClass="cdt.managedbuild.option.gnu.cross.prefix.973432646"/>
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF;org.eclipse.cdt.core.GNU_ELF" id="cdt.managedbuild.targetPlatform.gnu.cross" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.566821070" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler.1889044934">
+								<option id="gnu.c.compiler.option.preprocessor.undef.symbol.727466238" name="Undefined symbols (-U)" superClass="gnu.c.compiler.option.preprocessor.undef.symbol" valueType="undefDefinedSymbols"/>
+								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1230443999" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.1141833910" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler.78374513">
+								<option id="gnu.cpp.compiler.option.preprocessor.def.214379476" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="CONF_DEBUG"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1730224628" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.1442276637" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker.168288716"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.linker.1920931200" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker.499568800"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.archiver.1491420109" name="Cross GCC Archiver" superClass="cdt.managedbuild.tool.gnu.cross.archiver.398503225"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.assembler.1045779505" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler.196217294">
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.769306389" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
 				</configuration>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
@@ -139,6 +165,10 @@
 								<option command="-mlittle-endian" id="gnu.c.compiler.option.endian.1793696475" name="CPU Endian" superClass="gnu.c.compiler.option.endian" value="Little Endian(-mlittle-endian)" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.warnings.allwarn.791326455" name="All warnings (-Wall)" superClass="gnu.c.compiler.option.warnings.allwarn" value="true" valueType="boolean"/>
 								<option id="gnu.c.compiler.option.misc.other.1106870334" name="Other flags" superClass="gnu.c.compiler.option.misc.other" value="-c" valueType="string"/>
+								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1850823686" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="CONF_RELEASE"/>
+								</option>
+								<option id="gnu.c.compiler.option.preprocessor.undef.symbol.696030754" name="Undefined symbols (-U)" superClass="gnu.c.compiler.option.preprocessor.undef.symbol" valueType="undefDefinedSymbols"/>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.979350484" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.1670169370" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler">
@@ -186,6 +216,28 @@
 								<option id="gnu.both.asm.option.include.paths.2098980205" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths"/>
 								<option command="-EL" id="gnu.asm.option.cpu.type.456982288" name="CPU Endian" superClass="gnu.asm.option.cpu.type" value="Little Endian(-EL)" valueType="enumerated"/>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.496341112" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
+							</tool>
+						</toolChain>
+					</folderInfo>
+					<folderInfo id="cdt.managedbuild.config.gnu.cross.exe.release.839087830.1816286208" name="/" resourcePath="Release">
+						<toolChain id="cdt.managedbuild.toolchain.gnu.cross.exe.release.1718036329" name="Cross GCC" superClass="cdt.managedbuild.toolchain.gnu.cross.exe.release" unusedChildren="">
+							<option id="cdt.managedbuild.option.gnu.cross.prefix.144680354.1641498123" name="Prefix" superClass="cdt.managedbuild.option.gnu.cross.prefix.144680354"/>
+							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF;org.eclipse.cdt.core.GNU_ELF" id="cdt.managedbuild.targetPlatform.gnu.cross" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.449457297" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler.474248628">
+								<option id="gnu.c.compiler.option.preprocessor.undef.symbol.2124554415" name="Undefined symbols (-U)" superClass="gnu.c.compiler.option.preprocessor.undef.symbol" valueType="undefDefinedSymbols"/>
+								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1640659809" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.83041837" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler.1670169370">
+								<option id="gnu.cpp.compiler.option.preprocessor.def.739770910" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
+									<listOptionValue builtIn="false" value="CONF_RELEASE"/>
+								</option>
+								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.738541472" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
+							</tool>
+							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.1069542000" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker.336924551"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.linker.260693106" name="Cross G++ Linker" superClass="cdt.managedbuild.tool.gnu.cross.cpp.linker.1225595480"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.archiver.46951035" name="Cross GCC Archiver" superClass="cdt.managedbuild.tool.gnu.cross.archiver.21033910"/>
+							<tool id="cdt.managedbuild.tool.gnu.cross.assembler.1642445" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler.1050060094">
+								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1194096331" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
 						</toolChain>
 					</folderInfo>

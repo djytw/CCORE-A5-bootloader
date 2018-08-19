@@ -6,7 +6,6 @@
 #ifndef __VECTOR_TABLE_H__
 #define __VECTOR_TABLE_H__
 
-#include "vector_define.h"
 
 #define ISR01 Misaligned_Access        // Misaligned Access
 #define ISR02 Access_Error             // Access Error

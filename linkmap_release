@@ -5,7 +5,10 @@ MEMORY
     ext_ram  : ORIGIN = 0x80800000, LENGTH = 1024k
      eflash  : ORIGIN = 0x00400000, LENGTH = 1280k
 }
-
+/*
+     eflash  : ORIGIN = 0x00420000, LENGTH = 1152k
+     eflash  : ORIGIN = 0x00400000, LENGTH = 1280k
+*/
 STACK_LOCATION = 0x83fffc ;
 
 

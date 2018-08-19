@@ -13,7 +13,6 @@
 #include "pit_drv.h"
 #include "ccm_drv.h"
 #include "cpm_api.h"
-#include "reboot_demo.h"
 #include "i2c_api.h"
 #include "wdt_api.h"
 
