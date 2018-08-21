@@ -5,7 +5,8 @@
 #include "eflash_api.h"
 #include "eflash_demo.h"
 #define __VER__  "\033[33mdjytw C*Core bootloader.\n\rVersion: 0.1 alpha\n\r\n\r\033[0m"
-void test();
+
+
 void printf_version(void){
 	MSG("\033[2J\n\r\033[32m"
 	   				 "\n\r"
@@ -21,46 +22,35 @@ void printf_version(void){
 }
 u8 sci_read_notimeout();
 u8 direct_write(u32 ds, u32 dl){
-	u32 efm_clk,i,j,ret_code,pages;
+	u32 efm_clk,i,ret_code;
 	efm_clk = cpm_get_efmclk();
 	eflash_init(efm_clk);
 
 	if(!dl||dl%4){
 		asm("bkpt");
 	}
-
-	//alloc mem for pages.
-	pages=dl/512+(dl%512==0?0:1);
-	u32 **bin=(u32**)malloc(sizeof(u32*)*pages);
-	for(i=0;i<pages;i++){
-		bin[i]=(u32*)malloc(sizeof(u32)*128);
-	}
-
-	for(i = ds; i <= ds+512*pages; i += 512){
+	u32 *bin=(u32*)0x00820000;
+	for(i = ds; i <= ds+dl; i += 512){
 		ret_code = eflash_page_erase(i);
 		if(ret_code == EFLASH_PROG_ERASE_FAIL){
 			asm("bkpt");
 		}
 	}
-	for(i=0;i<pages;i++){
-		for(j=0;j<128;j++){
-			u32 data=0;u8 a;
-			a=sci_receive_byte();
-			data|=a;
-			a=sci_receive_byte();
-			data|=a<<8;
-			a=sci_receive_byte();
-			data|=a<<16;
-			a=sci_receive_byte();
-			data|=a<<24;
-			bin[i][j]=data;
-		}
+	for(i=0;i<dl/4;i++){
+		u32 data=0;u8 a;
+		a=sci_receive_byte();
+		data|=a;
+		a=sci_receive_byte();
+		data|=a<<8;
+		a=sci_receive_byte();
+		data|=a<<16;
+		a=sci_receive_byte();
+		data|=a<<24;
+		bin[i]=data;
 	}
-	for(i=0;i<pages;i++){
-		ret_code = eflash_bulk_program(ds+i*512,128,bin[i]);
-		if(ret_code == EFLASH_PROG_ERASE_FAIL){
-			asm("bkpt");
-		}
+	ret_code = eflash_bulk_program(ds,dl/4,bin);
+	if(ret_code == EFLASH_PROG_ERASE_FAIL){
+		asm("bkpt");
 	}
 	return 0;
 }
