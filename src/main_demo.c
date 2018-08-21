@@ -21,32 +21,46 @@ void printf_version(void){
 }
 u8 sci_read_notimeout();
 u8 direct_write(u32 ds, u32 dl){
-	u32 efm_clk,i,ret_code;
+	u32 efm_clk,i,j,ret_code,pages;
 	efm_clk = cpm_get_efmclk();
 	eflash_init(efm_clk);
-	for(i = ds; i <= ds+dl; i += 512){
+
+	if(!dl||dl%4){
+		asm("bkpt");
+	}
+
+	//alloc mem for pages.
+	pages=dl/512+(dl%512==0?0:1);
+	u32 **bin=(u32**)malloc(sizeof(u32*)*pages);
+	for(i=0;i<pages;i++){
+		bin[i]=(u32*)malloc(sizeof(u32)*128);
+	}
+
+	for(i = ds; i <= ds+512*pages; i += 512){
 		ret_code = eflash_page_erase(i);
 		if(ret_code == EFLASH_PROG_ERASE_FAIL){
 			asm("bkpt");
 		}
 	}
-	i=ds;
-	while(i<ds+dl){
-		u32 data=0;u8 a;
-		a=sci_receive_byte();
-		data|=a;
-		a=sci_receive_byte();
-		data|=a<<8;
-		a=sci_receive_byte();
-		data|=a<<16;
-		a=sci_receive_byte();
-		data|=a<<24;
-
-		ret_code = eflash_program(i, data);
+	for(i=0;i<pages;i++){
+		for(j=0;j<128;j++){
+			u32 data=0;u8 a;
+			a=sci_receive_byte();
+			data|=a;
+			a=sci_receive_byte();
+			data|=a<<8;
+			a=sci_receive_byte();
+			data|=a<<16;
+			a=sci_receive_byte();
+			data|=a<<24;
+			bin[i][j]=data;
+		}
+	}
+	for(i=0;i<pages;i++){
+		ret_code = eflash_bulk_program(ds+i*512,128,bin[i]);
 		if(ret_code == EFLASH_PROG_ERASE_FAIL){
 			asm("bkpt");
 		}
-		i+=4;
 	}
 	return 0;
 }
@@ -95,12 +109,15 @@ prog:
 			MSG("\t\tFollowed by address which will be changed. 8 digits exactly, without '0x'. The default value is 00420000.\n\r"
 					"\t\teg. s00420000\n\r"
 					"\tl  -  Set writing length.\n\r");
-			MSG("\t\tFollowed by data length (or file size of the bin file), 8 digits exactly, without '0x'. \n\r"
+			MSG("\t\tFollowed by data length (or file size of the bin file), 3 digits exactly, less than 200. Default: 200\n\r"
 					"\tw  -  Direct writing to flash. \n\r");
 			MSG("\t\tNeed to specify data length with 'l' command. Following LENGTH bytes will be write to flash.\n\r"
 					"\tc  -  Writing with SHA-256 check\n\r");
 			MSG("\t\tNeed to specify data length with 'l' command. Following 256 bytes is SHA-256 value of data, and then LENGTH bytes will be write to flash and be checked.\n\r"
 					"\tb  -  Boot to program directly.\n\r\n\r");
+			break;
+		case 'p':
+			//internal usage for programmers, will strip output msg.
 			break;
 		case 'b':
 			goto app_starts;
@@ -128,12 +145,13 @@ prog:
 					break;
 				}
 			}
+			//TODO check ds%4
 			MSG("\n\rStart point = 0x%08x now.\n\r",ds);
 			break;
 		case 'l':
 			dl=0;
 			MSG("Enter data length: ");
-			for(i=0;i<8;i++){
+			for(i=0;i<4;i++){
 				u8 t;
 				t=sci_receive_byte();
 				MSG("%c",t);
@@ -151,7 +169,7 @@ prog:
 				}
 			}
 			if(dl==0||dl%4)
-				MSG("\n\rSet length failed. length should be divisible by 4 and not 0\n\r");
+				MSG("\n\rSet length failed. length should be divisible by 4 and not 0 \n\r");
 			else
 				MSG("\n\rSet length ok. New value is 0x%08x.\n\r",dl);
 			break;

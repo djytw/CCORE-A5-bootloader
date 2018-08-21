@@ -198,14 +198,6 @@ UINT8 sci_receive_byte(void)
 	return tmp;
 }
 
-
-u8 sci_read_notimeout(){
-	u8 tmp;
-	SCI_ENABLE_RECEIVER;
-	if(0 == (pregspointer->SR1 & RDRF_MASK))return 0xff;
-	tmp = pregspointer->DRL;
-	return tmp;
-}
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //                 sci_sel_di
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
