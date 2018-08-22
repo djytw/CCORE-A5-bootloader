@@ -4,8 +4,8 @@
 #include "eport_api.h"
 #include "eflash_api.h"
 #include "eflash_demo.h"
-#include "crc_api.h"
-#include "crc_drv.h"
+#include "alg_api.h"
+#include "alg_drv.h"
 #define __VER__  "\033[33mdjytw C*Core bootloader.\n\rVersion: 0.1 alpha\n\r\n\r\033[0m"
 #define DEBUG_BREAK asm("bkpt")
 #define PMSG(...) {if(!is_programmer)MSG(__VA_ARGS__);}
@@ -78,7 +78,7 @@ u8 set_data_length(){
 		return 2;
 	}
 	PMSG("\n\rSet length ok. New value is 0x%04x.\n\r",dl);
-	DMSG("o%08x",dl);
+	DMSG("o%04x",dl);
 	return 0;
 }
 u8 set_start_point(){
@@ -164,10 +164,23 @@ u8 direct_write(){
 		return 3;
 	}
 
-	//calculate CRC32
-	u32 crc  = crc_calc((u8*)ds, dl, 0xffffffff, CRC_32, 0);
-	PMSG("Flash write ok! CRC=%08x\n\r",crc);
-	DMSG("o%08x",crc);
+	//calculate SHA256
+	u8* sha256=(u8*)0x00820000;
+	hash_init(MODE_SHA256);
+	sha_update(ds,dl);
+	hash_dofinal(MODE_SHA256,sha256);
+	u8 shaans[65];
+	for(i=0;i<32;i++){
+		u8 hi=sha256[i]>>4;
+		u8 lo=sha256[i]&0xf;
+		if(hi<10)shaans[i*2]=hi+'0';
+		else shaans[i*2]=hi+'A'-10;
+		if(lo<10)shaans[i*2+1]=lo+'0';
+		else shaans[i*2+1]=lo+'A'-10;
+	}
+	shaans[64]=0;
+	PMSG("Flash write ok! SHA256=%s\n\r",shaans);
+	DMSG("o%s",shaans);
 	return 0;
 }
 int main(void){
@@ -228,13 +241,16 @@ prog:
 		case 'w':
 			direct_write();
 			break;
-		case 't':
-		{
-			u8 test[]={'a'};
-			u32 crc  = crc_calc(test, 1, 0x04C11DB7 , CRC_32, 1);
-			MSG("%08x",crc);
-		}
-			break;
+		case 't':{
+			u8 s[5]={'a','b','c','d','e'};
+				u8* data=(u8*)0x00820001;
+				u8* sha256=(u8*)0x00820101;
+				memcpy(data,s,5);
+				hash_init(MODE_SHA256);
+				hash_update(data,5);
+				hash_dofinal(MODE_SHA256,sha256);
+				PMSG("Flash write ok! SHA256=%s\n\r",sha256);}
+				break;
 		default:
 			MSG("Unrecognized command - %c, Use 'h' to get help.\n\r",ser);
 		}
