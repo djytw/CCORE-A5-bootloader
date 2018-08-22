@@ -46,7 +46,7 @@ enum
 /*-------------------------------------------------------------------*/
 
 void msg_printf(char *fmt, ...);
-void assert(BOOL val);
+//void assert(BOOL val);
 
 #endif /* __DEBUG_H__ */
 

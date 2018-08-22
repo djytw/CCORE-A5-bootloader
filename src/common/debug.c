@@ -57,11 +57,11 @@ void msg_printf(char *fmt, ...)
 
     va_end(args);
 }
-
+/*
 void assert(BOOL val)
 {
 	if( val == FALSE )
 	{
 		asm("bkpt");
 	}
-}
+}*/

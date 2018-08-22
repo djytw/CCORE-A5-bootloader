@@ -4,11 +4,13 @@
 #include "eport_api.h"
 #include "eflash_api.h"
 #include "eflash_demo.h"
+#include "crc_api.h"
+#include "crc_drv.h"
 #define __VER__  "\033[33mdjytw C*Core bootloader.\n\rVersion: 0.1 alpha\n\r\n\r\033[0m"
 #define DEBUG_BREAK asm("bkpt")
-#define PMSG(...) if(!is_programmer)MSG(__VA_ARGS__)
-#define DMSG(...) if(is_programmer)MSG(__VA_ARGS__)
-
+#define PMSG(...) {if(!is_programmer)MSG(__VA_ARGS__);}
+#define DMSG(...) {if(is_programmer)MSG(__VA_ARGS__);}
+#define assert(a) {if(!(a))asm("bkpt");}
 
 
 
@@ -28,11 +30,9 @@ void show_help(){
 	PMSG("\t\tFollowed by address which will be changed. 8 digits exactly, without '0x'. The default value is 00420000.\n\r"
 			"\t\teg. s00420000\n\r"
 			"\tl  -  Set writing length.\n\r");
-	PMSG("\t\tFollowed by data length (or file size of the bin file), 3 digits exactly, less than 200. Default: 200\n\r"
+	PMSG("\t\tFollowed by data length (or file size of the bin file), 4 digits exactly. Default: 200\n\r"
 			"\tw  -  Direct writing to flash. \n\r");
-	PMSG("\t\tNeed to specify data length with 'l' command. Following LENGTH bytes will be write to flash.\n\r"
-			"\tc  -  Writing with SHA-256 check\n\r");
-	PMSG("\t\tNeed to specify data length with 'l' command. Following 256 bytes is SHA-256 value of data, and then LENGTH bytes will be write to flash and be checked.\n\r"
+	PMSG("\t\tNeed to specify data length with 'l' command. Following LENGTH bytes will be write to flash. After writing, CRC32 will be calculated and returned.\n\r"
 			"\tb  -  Boot to program directly.\n\r\n\r");
 }
 void printf_version(void){
@@ -53,6 +53,7 @@ u8 set_data_length(){
 	dl=0;
 	PMSG("Enter data length: ");
 	//data_length: 4digits
+	u8 i;
 	for(i=0;i<4;i++){
 		u8 t;
 		t=sci_receive_byte();
@@ -76,7 +77,7 @@ u8 set_data_length(){
 		DMSG("f2");
 		return 2;
 	}
-	PMSG("\n\rSet length ok. New value is 0x%08x.\n\r",dl);
+	PMSG("\n\rSet length ok. New value is 0x%04x.\n\r",dl);
 	DMSG("o%08x",dl);
 	return 0;
 }
@@ -84,6 +85,7 @@ u8 set_start_point(){
 	ds=0;
 	PMSG("New start point: ");
 	//start_point: u32 : 8digits
+	u8 i;
 	for(i=0;i<8;i++){
 		u8 t;
 		t=sci_receive_byte();
@@ -125,11 +127,13 @@ u8 direct_write(){
 		return 1;
 	}
 	//dl should not be illegal
-	assert(dl&&!(dl%4));
+	assert(dl>0);
+	assert(dl%4==0);
 
 	//malloc not working. Use sram addr directly.
 	u32 *bin=(u32*)0x00820000;
 
+	u32 i,ret_code;
 	//erase flash from ds to ds+dl
 	for(i = ds; i <= ds+dl; i += 512){
 		ret_code = eflash_page_erase(i);
@@ -159,8 +163,11 @@ u8 direct_write(){
 		DMSG("f3");
 		return 3;
 	}
-	PMSG("Flash write ok!\n\r");
-	DMSG("o");
+
+	//calculate CRC32
+	u32 crc  = crc_calc((u8*)ds, dl, 0xffffffff, CRC_32, 0);
+	PMSG("Flash write ok! CRC=%08x\n\r",crc);
+	DMSG("o%08x",crc);
 	return 0;
 }
 int main(void){
@@ -220,6 +227,13 @@ prog:
 			break;
 		case 'w':
 			direct_write();
+			break;
+		case 't':
+		{
+			u8 test[]={'a'};
+			u32 crc  = crc_calc(test, 1, 0x04C11DB7 , CRC_32, 1);
+			MSG("%08x",crc);
+		}
 			break;
 		default:
 			MSG("Unrecognized command - %c, Use 'h' to get help.\n\r",ser);
