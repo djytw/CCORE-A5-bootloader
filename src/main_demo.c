@@ -214,6 +214,11 @@ int main(void){
 	//app_starts()
 app_starts:
 	PMSG("Starting app.\n\r");
+	u32 start_point=eflash_word_read(0x00420000);
+	PMSG("position=0x%08x\n\r",start_point);
+	void (*app_start)(void);
+	app_start = (void (*) (void))(UINT32*)start_point;
+	app_start();
 	while(1);
 
 	//receive cmd. Stop timing and proc.
@@ -241,16 +246,6 @@ prog:
 		case 'w':
 			direct_write();
 			break;
-		case 't':{
-			u8 s[5]={'a','b','c','d','e'};
-				u8* data=(u8*)0x00820001;
-				u8* sha256=(u8*)0x00820101;
-				memcpy(data,s,5);
-				hash_init(MODE_SHA256);
-				hash_update(data,5);
-				hash_dofinal(MODE_SHA256,sha256);
-				PMSG("Flash write ok! SHA256=%s\n\r",sha256);}
-				break;
 		default:
 			MSG("Unrecognized command - %c, Use 'h' to get help.\n\r",ser);
 		}
