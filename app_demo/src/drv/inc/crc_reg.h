@@ -1,0 +1,80 @@
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+// File name    : crc_reg.h
+// Version      : V0.1
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+#ifndef __CRC_REG_H__
+#define __CRC_REG_H__
+
+// new crc registers
+
+#define AHB_CRC_CR 			(*(volatile UINT32 *)(AHB_CRC_BASE))
+#define AHB_CRC_CR8 		(*(volatile UINT32 *)(AHB_CRC_BASE))
+#define AHB_CRC_CODE 		(*(volatile UINT32 *)(AHB_CRC_BASE + 0x04))
+#define AHB_CRC_CODE16 		(*(volatile UINT16 *)(AHB_CRC_BASE + 0x04))
+#define AHB_CRC_CODE16H 	(*(volatile UINT16 *)(AHB_CRC_BASE + 0x04))
+#define AHB_CRC_CODE16L 	(*(volatile UINT16 *)(AHB_CRC_BASE + 0x06))
+#define AHB_CRC_CODE8 		(*(volatile UINT8 *)(AHB_CRC_BASE + 0x04))
+#define AHB_CRC_CODE80 		(*(volatile UINT8 *)(AHB_CRC_BASE + 0x04))
+#define AHB_CRC_CODE81 		(*(volatile UINT8 *)(AHB_CRC_BASE + 0x05))
+#define AHB_CRC_CODE82 		(*(volatile UINT8 *)(AHB_CRC_BASE + 0x06))
+#define AHB_CRC_CODE83 		(*(volatile UINT8 *)(AHB_CRC_BASE + 0x07))
+#define AHB_CRC_INI 		(*(volatile UINT32 *)(AHB_CRC_BASE + 0x08))
+#define AHB_CRC_INI16 		(*(volatile UINT16 *)(AHB_CRC_BASE + 0x08))
+#define AHB_CRC_INI16H 		(*(volatile UINT16 *)(AHB_CRC_BASE + 0x08))
+#define AHB_CRC_INI16L 		(*(volatile UINT16 *)(AHB_CRC_BASE + 0x0a))
+#define AHB_CRC_INI8 		(*(volatile UINT8 *)(AHB_CRC_BASE + 0x08))
+#define AHB_CRC_INI80 		(*(volatile UINT8 *)(AHB_CRC_BASE + 0x08))
+#define AHB_CRC_INI81 		(*(volatile UINT8 *)(AHB_CRC_BASE + 0x09))
+#define AHB_CRC_INI82 		(*(volatile UINT8 *)(AHB_CRC_BASE + 0x0a))
+#define AHB_CRC_INI83 		(*(volatile UINT8 *)(AHB_CRC_BASE + 0x0b))
+#define AHB_CRC_DATA 		(*(volatile UINT32 *)(AHB_CRC_BASE + 0x0c))
+#define AHB_CRC_DATA16 		(*(volatile UINT16 *)(AHB_CRC_BASE + 0x0c))
+#define AHB_CRC_DATA16H 	(*(volatile UINT16 *)(AHB_CRC_BASE + 0x0c))
+#define AHB_CRC_DATA16L 	(*(volatile UINT16 *)(AHB_CRC_BASE + 0x0e))
+#define AHB_CRC_DATA8 		(*(volatile UINT8 *)(AHB_CRC_BASE + 0x0c))
+#define AHB_CRC_DATA80 		(*(volatile UINT8 *)(AHB_CRC_BASE + 0x0c))
+#define AHB_CRC_DATA81 		(*(volatile UINT8 *)(AHB_CRC_BASE + 0x0d))
+#define AHB_CRC_DATA82 		(*(volatile UINT8 *)(AHB_CRC_BASE + 0x0e))
+#define AHB_CRC_DATA83 		(*(volatile UINT8 *)(AHB_CRC_BASE + 0x0f))
+#define AHB_CRC_EDMAOK 		(*(volatile UINT32 *)(AHB_CRC_BASE + 0x14))
+
+#define AHB_CRC1_CR 		(*(volatile UINT32 *)(AHB_CRC1_BASE))
+#define AHB_CRC1_CR8 		(*(volatile UINT32 *)(AHB_CRC1_BASE))
+#define AHB_CRC1_CODE 		(*(volatile UINT32 *)(AHB_CRC1_BASE + 0x04))
+#define AHB_CRC1_CODE16 	(*(volatile UINT16 *)(AHB_CRC1_BASE + 0x04))
+#define AHB_CRC1_CODE16H 	(*(volatile UINT16 *)(AHB_CRC1_BASE + 0x04))
+#define AHB_CRC1_CODE16L 	(*(volatile UINT16 *)(AHB_CRC1_BASE + 0x06))
+#define AHB_CRC1_CODE8 		(*(volatile UINT8 *)(AHB_CRC1_BASE + 0x04))
+#define AHB_CRC1_CODE80 	(*(volatile UINT8 *)(AHB_CRC1_BASE + 0x04))
+#define AHB_CRC1_CODE81 	(*(volatile UINT8 *)(AHB_CRC1_BASE + 0x05))
+#define AHB_CRC1_CODE82 	(*(volatile UINT8 *)(AHB_CRC1_BASE + 0x06))
+#define AHB_CRC1_CODE83 	(*(volatile UINT8 *)(AHB_CRC1_BASE + 0x07))
+#define AHB_CRC1_INI 		(*(volatile UINT32 *)(AHB_CRC1_BASE + 0x08))
+#define AHB_CRC1_INI16 		(*(volatile UINT16 *)(AHB_CRC1_BASE + 0x08))
+#define AHB_CRC1_INI16H 	(*(volatile UINT16 *)(AHB_CRC1_BASE + 0x08))
+#define AHB_CRC1_INI16L 	(*(volatile UINT16 *)(AHB_CRC1_BASE + 0x0a))
+#define AHB_CRC1_INI8 		(*(volatile UINT8 *)(AHB_CRC1_BASE + 0x08))
+#define AHB_CRC1_INI80 		(*(volatile UINT8 *)(AHB_CRC1_BASE + 0x08))
+#define AHB_CRC1_INI81 		(*(volatile UINT8 *)(AHB_CRC1_BASE + 0x09))
+#define AHB_CRC1_INI82 		(*(volatile UINT8 *)(AHB_CRC1_BASE + 0x0a))
+#define AHB_CRC1_INI83 		(*(volatile UINT8 *)(AHB_CRC1_BASE + 0x0b))
+#define AHB_CRC1_DATA 		(*(volatile UINT32 *)(AHB_CRC1_BASE + 0x0c))
+#define AHB_CRC1_DATA16 	(*(volatile UINT16 *)(AHB_CRC1_BASE + 0x0c))
+#define AHB_CRC1_DATA16H 	(*(volatile UINT16 *)(AHB_CRC1_BASE + 0x0c))
+#define AHB_CRC1_DATA16L 	(*(volatile UINT16 *)(AHB_CRC1_BASE + 0x0e))
+#define AHB_CRC1_DATA8 		(*(volatile UINT8 *)(AHB_CRC1_BASE + 0x0c))
+#define AHB_CRC1_DATA80 	(*(volatile UINT8 *)(AHB_CRC1_BASE + 0x0c))
+#define AHB_CRC1_DATA81 	(*(volatile UINT8 *)(AHB_CRC1_BASE + 0x0d))
+#define AHB_CRC1_DATA82 	(*(volatile UINT8 *)(AHB_CRC1_BASE + 0x0e))
+#define AHB_CRC1_DATA83 	(*(volatile UINT8 *)(AHB_CRC1_BASE + 0x0f))
+#define AHB_CRC1_EDMAOK 	(*(volatile UINT8 *)(AHB_CRC1_BASE + 0x14))
+
+#define CRC_CTRL			(*(volatile UINT32 *)(AHB_CRC_BASE + 0x00))
+#define CRC_RESULT			(*(volatile UINT32 *)(AHB_CRC_BASE + 0x04))
+#define CRC_INIT_DATA		(*(volatile UINT32 *)(AHB_CRC_BASE + 0x08))
+#define CRC_DATA_IN			(*(volatile UINT32 *)(AHB_CRC_BASE + 0x0C))
+#define CRC_DMAC_DATA_IN	(*(volatile UINT32 *)(AHB_CRC_BASE + 0x10))
+
+#endif /* __CRC_REG_H__ */
