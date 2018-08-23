@@ -45,24 +45,24 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: app.elf
+all: app_demo.elf
 
 # Tool invocations
-app.elf: $(OBJS) $(USER_OBJS) ../linkmap_release
+app_demo.elf: $(OBJS) $(USER_OBJS) ../linkmap_release
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross GCC Linker'
-	mcore-elf-ld -EL --gc-sections -L"C:\CCore_IDE/tool-chain/ccore-elf/mcore-elf/lib/c0_div" -L"C:\CCore_IDE/tool-chain/ccore-elf/lib/gcc/mcore-elf/4.6.0/c0_div" -L"C:\CCore_IDE\ccore-eclipse\workspace\app\src\drv\lib" -e __start -N -t -warn-common -Map app.map -T../linkmap_release -o "app.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	mcore-elf-ld -EL --gc-sections -L"C:\CCore_IDE/tool-chain/ccore-elf/mcore-elf/lib/c0_div" -L"C:\CCore_IDE/tool-chain/ccore-elf/lib/gcc/mcore-elf/4.6.0/c0_div" -L"C:\CCore_IDE\ccore-eclipse\workspace\app_demo\src\drv\lib" -e __start -N -t -warn-common -Map app_demo.map -T../linkmap_release -o "app_demo.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 	$(MAKE) --no-print-directory post-build
 
 # Other Targets
 clean:
-	-$(RM) $(C++_DEPS)$(OBJS)$(C_DEPS)$(CC_DEPS)$(CPP_DEPS)$(EXECUTABLES)$(CXX_DEPS)$(C_UPPER_DEPS) app.elf *.bin *.s *.obj *.map *.elf *.a
+	-$(RM) $(C++_DEPS)$(OBJS)$(C_DEPS)$(CC_DEPS)$(CPP_DEPS)$(EXECUTABLES)$(CXX_DEPS)$(C_UPPER_DEPS) app_demo.elf *.bin *.s *.obj *.map *.elf *.a
 	-@echo ' '
 
 post-build:
-	-mcore-elf-objcopy  -O binary app.elf app.bin& mcore-elf-objdump -D app.elf > app.obj& mcore-elf-size app.elf
+	-mcore-elf-objcopy  -O binary app_demo.elf app_demo.bin& mcore-elf-objdump -D app_demo.elf > app_demo.obj& mcore-elf-size app_demo.elf
 	-@echo ' '
 
 .PHONY: all clean dependents

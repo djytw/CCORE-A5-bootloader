@@ -1,5 +1,4 @@
 #include "includes.h"
-#include "wdt_api.h"
 #include "cpm_api.h"
 #include "eport_api.h"
 
@@ -18,8 +17,6 @@ void printf_version(void){
 }
 int main(void){
 	cpm_init();
-	sci_init(SCI_ID2, g_ips_clk, BAUDRATE_115200);
-	wdt_disable();
 	printf_version();
 	u32 i;
 	for(i=0;i<8;i++){

@@ -11,6 +11,7 @@
 	.type __start,@function
 __start:
 	// set the stack
+	jsri	main
 	lrw	r1, STACK_LOCATION
 	mov	r0,r1
 
@@ -55,7 +56,6 @@ skip_set_vbr:
 
 	//call main (of the C code)
 	jsri  __main
-	jsri	main
 	
 	.export	exit
 exit:	

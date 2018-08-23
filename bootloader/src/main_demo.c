@@ -31,9 +31,9 @@ void show_help(){
 	PMSG("\t\tFollowed by address which will be changed. 8 digits exactly, without '0x'. The default value is 00420000.\n\r"
 			"\t\teg. s00420000\n\r"
 			"\tl  -  Set writing length.\n\r");
-	PMSG("\t\tFollowed by data length (or file size of the bin file), 4 digits exactly. Default: 200\n\r"
+	PMSG("\t\tFollowed by data length (or file size of the bin file), 4 digits exactly. Default: 0200\n\r"
 			"\tw  -  Direct writing to flash. \n\r");
-	PMSG("\t\tNeed to specify data length with 'l' command. Following LENGTH bytes will be write to flash. After writing, CRC32 will be calculated and returned.\n\r"
+	PMSG("\t\tNeed to specify data length with 'l' command. Following LENGTH bytes will be write to flash. After writing, SHA-256 will be calculated and returned.\n\r"
 			"\tb  -  Boot to program directly.\n\r\n\r");
 }
 void printf_version(void){
@@ -196,8 +196,8 @@ int main(void){
 	u32 i,j;
 	u8 ser;
 	is_programmer=0;
-	for(i=20;i>0;i--){
-		MSG("\rSystem will boot in %ds...",i);
+	for(i=9;i>0;i--){
+		MSG("\rSystem will boot in 0.%ds...",i);
 		for(j=0;j<1000;j++){
 			ser=sci_read_notimeout();
 			if(ser!=0xff){
@@ -212,7 +212,7 @@ int main(void){
 				goto prog;
 			}
 			//TODO: a more precise delay
-			delay(1100);
+			delay(120);
 		}
 	}
 
