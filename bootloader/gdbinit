@@ -21,9 +21,9 @@ monitor core_reset
 
 #monitor mem_config "C:/CCore_IDE/tool-chain/memory_config/C0.memcfg"
 
-#monitor script "C:/CCore_IDE/ccore-eclipse/workspace/A5(ET300)_CommonDemo/debug_eflash/flash_erase.tcl"
+#monitor script "C:/CCore_IDE/ccore-eclipse/workspace/bootloader/debug_eflash/flash_erase.tcl"
 
-#monitor script "C:/CCore_IDE/ccore-eclipse/workspace/A5(ET300)_CommonDemo/debug_eflash/flash_pro.tcl"
+#monitor script "C:/CCore_IDE/ccore-eclipse/workspace/bootloader/debug_eflash/flash_pro.tcl"
 
 #monitor reg pc 0x20000000
 

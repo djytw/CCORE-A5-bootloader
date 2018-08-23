@@ -45,24 +45,24 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: A5(ET300)_CommonDemo.elf
+all: bootloader.elf
 
 # Tool invocations
-A5(ET300)_CommonDemo.elf: $(OBJS) $(USER_OBJS) ../linkmap_release
+bootloader.elf: $(OBJS) $(USER_OBJS) ../linkmap_release
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross GCC Linker'
-	mcore-elf-ld -EL --gc-sections -L"C:\CCore_IDE/tool-chain/ccore-elf/mcore-elf/lib/c0_div" -L"C:\CCore_IDE/tool-chain/ccore-elf/lib/gcc/mcore-elf/4.6.0/c0_div" -L"C:\CCore_IDE\ccore-eclipse\workspace\A5(ET300)_CommonDemo\src\drv\lib" -e __start -N -t -warn-common -Map A5(ET300)_CommonDemo.map -T../linkmap_release -o "A5(ET300)_CommonDemo.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	mcore-elf-ld -EL --gc-sections -L"C:\CCore_IDE/tool-chain/ccore-elf/mcore-elf/lib/c0_div" -L"C:\CCore_IDE/tool-chain/ccore-elf/lib/gcc/mcore-elf/4.6.0/c0_div" -L"C:\CCore_IDE\ccore-eclipse\workspace\bootloader\src\drv\lib" -e __start -N -t -warn-common -Map bootloader.map -T../linkmap_release -o "bootloader.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 	$(MAKE) --no-print-directory post-build
 
 # Other Targets
 clean:
-	-$(RM) $(C++_DEPS)$(OBJS)$(C_DEPS)$(CC_DEPS)$(CPP_DEPS)$(EXECUTABLES)$(CXX_DEPS)$(C_UPPER_DEPS) A5(ET300)_CommonDemo.elf *.bin *.s *.obj *.map *.elf *.a
+	-$(RM) $(C++_DEPS)$(OBJS)$(C_DEPS)$(CC_DEPS)$(CPP_DEPS)$(EXECUTABLES)$(CXX_DEPS)$(C_UPPER_DEPS) bootloader.elf *.bin *.s *.obj *.map *.elf *.a
 	-@echo ' '
 
 post-build:
-	-mcore-elf-objcopy  -O binary A5(ET300)_CommonDemo.elf A5(ET300)_CommonDemo.bin& mcore-elf-objdump -D A5(ET300)_CommonDemo.elf > A5(ET300)_CommonDemo.obj& mcore-elf-size A5(ET300)_CommonDemo.elf
+	-mcore-elf-objcopy  -O binary bootloader.elf bootloader.bin& mcore-elf-objdump -D bootloader.elf > bootloader.obj& mcore-elf-size bootloader.elf
 	-@echo ' '
 
 .PHONY: all clean dependents

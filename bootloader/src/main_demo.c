@@ -6,7 +6,8 @@
 #include "eflash_demo.h"
 #include "alg_api.h"
 #include "alg_drv.h"
-#define __VER__  "\033[33mdjytw C*Core bootloader.\n\rVersion: 0.1 alpha\n\r\n\r\033[0m"
+
+#define __VER__  "1.0 RC-2"
 #define DEBUG_BREAK asm("bkpt")
 #define PMSG(...) {if(!is_programmer)MSG(__VA_ARGS__);}
 #define DMSG(...) {if(is_programmer)MSG(__VA_ARGS__);}
@@ -116,11 +117,6 @@ u8 set_start_point(){
 	return 0;
 }
 u8 direct_write(){
-	//Init flash clock.
-	u32 efm_clk;
-	efm_clk = cpm_get_efmclk();
-	eflash_init(efm_clk);
-
 	if(dl==0){
 		PMSG("Data length should be set first!\n\r");
 		DMSG("f1");
@@ -188,6 +184,15 @@ int main(void){
 	sci_init(SCI_ID2, g_ips_clk, BAUDRATE_115200);
 	wdt_disable();
 	printf_version();
+
+	//Init flash clock.
+	u32 efm_clk;
+	efm_clk = cpm_get_efmclk();
+	eflash_init(efm_clk);
+#ifdef CONF_DEBUG
+	eflash_recovery_to_rom();
+#endif
+
 	u32 i,j;
 	u8 ser;
 	is_programmer=0;
@@ -200,13 +205,14 @@ int main(void){
 				if(ser=='p'){
 					//internal usage for programmers, will strip output msg.
 					is_programmer=1;
+					DMSG("o");
 					ser=sci_receive_byte();
 				}
 				PMSG("\n\r");
 				goto prog;
 			}
 			//TODO: a more precise delay
-			delay(10000);
+			delay(1100);
 		}
 	}
 
@@ -235,7 +241,8 @@ prog:
 			goto app_starts;
 			break;
 		case 'i':
-			PMSG(__VER__);
+			PMSG("\033[33mdjytw C*Core bootloader.\n\rVersion: "__VER__"\n\r\n\r\033[0m");
+			DMSG("CCBOOT");
 			break;
 		case 's':
 			set_start_point();
@@ -246,8 +253,13 @@ prog:
 		case 'w':
 			direct_write();
 			break;
+		case 'p':
+			is_programmer=1;
+			DMSG("o");
+			break;
 		default:
-			MSG("Unrecognized command - %c, Use 'h' to get help.\n\r",ser);
+			PMSG("Unrecognized command - %c, Use 'h' to get help.\n\r",ser);
+			DMSG("f");
 		}
 		if(!is_programmer)MSG("\n\rbootloader> ");
 		//will block
