@@ -7,6 +7,10 @@
 #ifndef __EFLASH_H__
 #define __EFLASH_H__
 
+#ifdef __cplusplus
+extern "C" { 
+#endif
+
 #include "includes.h"
 #include "eflash_drv.h"
 
@@ -197,5 +201,9 @@ extern void eflash_enable_main_write_access();
  *     none
  */
 extern void eflash_disable_main_write_access();
+
+#ifdef __cplusplus 
+} 
+#endif
 
 #endif /* __EFLASH_H__ */

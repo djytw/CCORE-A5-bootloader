@@ -78,18 +78,16 @@ def main():
 		#wait for erase flash
 		time.sleep(0.1)
 		print("Start downloading...")
-		print(".")
+		print("")
 		t.write(data)
-		outold=0;
+		outold=t.out_waiting;
 		while t.out_waiting!=0:
 			if outold!=t.out_waiting:
-				outold=t.out_waiting
-				percent=(flen-outold)/flen;
-				print("\r%3d%% "%(percent*100),end='')
-				tot=(col-5)*percent;
-				for i in range(int(tot)):
+				dflen=(outold-t.out_waiting)/flen*100;
+				for i in range(int(dflen)):
 					print("#",end='')
 				sys.stdout.flush()
+				outold=t.out_waiting
 		print("")
 		print("write ok");
 		#wait for program flash, calc, etc

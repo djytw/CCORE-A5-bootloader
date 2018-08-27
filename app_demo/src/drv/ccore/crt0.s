@@ -54,9 +54,7 @@ skip_set_vbr:
 	lrw		r2,0x70070000
 	st.h	r3,(r2,0)
 
-	//call main (of the C code)
-	jsri  __main
-	
+
 	.export	exit
 exit:	
 	

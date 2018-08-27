@@ -6,6 +6,10 @@
 #ifndef __CPM_H__
 #define __CPM_H__
 
+#ifdef __cplusplus
+extern "C" { 
+#endif
+
 #include "includes.h"
 #include "cpm_drv.h"
 
@@ -26,4 +30,7 @@ extern BOOL cpm_set_sysclk(UINT32 sys_clk);
 
 extern void cpm_init(void);
 
+#ifdef __cplusplus 
+} 
+#endif
 #endif /* __CPM_H__ */

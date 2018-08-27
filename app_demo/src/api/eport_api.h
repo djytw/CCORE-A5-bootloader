@@ -6,6 +6,10 @@
 #ifndef __EPORT_API_H__
 #define __EPORT_API_H__
 
+#ifdef __cplusplus
+extern "C" { 
+#endif
+
 #include "includes.h"
 #include "eport_drv.h"
 #include "mim_drv.h"
@@ -30,5 +34,9 @@ extern void eport_write_port_data(UINT8 eport_num, UINT8 data);
 extern UINT8 eport_read_port_data(UINT8 eport_num);
 extern void eport_write_data(UINT8 eport_mask, UINT8 data);
 extern UINT8 eport_read_data(UINT8 eport_mask);
+
+#ifdef __cplusplus 
+} 
+#endif
 
 #endif /* __EPORT_API_H__ */

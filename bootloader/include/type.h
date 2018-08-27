@@ -26,6 +26,16 @@ typedef float                            FP32;
 typedef double                           FP64;
 
 
+//modified by djytw
+
+typedef UINT8 uint8_t;
+typedef UINT16 uint16_t;
+typedef UINT32 uint32_t;
+
+typedef UINT8 u8;
+typedef UINT16 u16;
+typedef UINT32 u32;
+
 typedef	volatile unsigned      char      VUINT8;
 typedef	volatile signed        char      VINT8;
 typedef	volatile unsigned      short     VUINT16;
@@ -95,6 +105,9 @@ typedef enum
 
 extern unsigned char  _ctype[];
 extern signed   char  _ctmp;
+
+
+
 
 
 #endif /* __TYPES_H__ */
