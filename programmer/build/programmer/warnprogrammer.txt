@@ -11,10 +11,10 @@ missing module named 'java.lang' - imported by platform, C:\CCore_IDE\ccore-ecli
 missing module named vms_lib - imported by platform, C:\CCore_IDE\ccore-eclipse\workspace\programmer\src\programmer.py
 missing module named termios - imported by tty, serial.serialposix, C:\CCore_IDE\ccore-eclipse\workspace\programmer\src\programmer.py, getpass
 missing module named grp - imported by tarfile, shutil, C:\CCore_IDE\ccore-eclipse\workspace\programmer\src\programmer.py
+missing module named org - imported by copy, C:\CCore_IDE\ccore-eclipse\workspace\programmer\src\programmer.py
 missing module named pwd - imported by posixpath, tarfile, shutil, http.server, webbrowser, C:\CCore_IDE\ccore-eclipse\workspace\programmer\src\programmer.py, netrc, getpass
 missing module named ce - imported by os, C:\CCore_IDE\ccore-eclipse\workspace\programmer\src\programmer.py
 missing module named _dummy_threading - imported by dummy_threading, C:\CCore_IDE\ccore-eclipse\workspace\programmer\src\programmer.py
-missing module named org - imported by copy, C:\CCore_IDE\ccore-eclipse\workspace\programmer\src\programmer.py
 missing module named fcntl - imported by serial.serialposix
 missing module named 'System.IO' - imported by serial.serialcli
 missing module named System - imported by serial.serialcli

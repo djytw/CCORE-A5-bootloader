@@ -17,7 +17,7 @@ def main():
 	#connect serial
 	print("Checking serial connection...",end='')
 	try:
-		t=serial.Serial(args.tty,115200,timeout=0,write_timeout=0)
+		t=serial.Serial(args.tty,500000,timeout=0,write_timeout=0)
 	except Exception as e:
 		print("Failed to open "+args.tty+"!")
 		return

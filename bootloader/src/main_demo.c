@@ -201,7 +201,7 @@ u8 direct_write(){
 }
 int main(void){
 	cpm_init();
-	sci_init(SCI_ID2, g_ips_clk, BAUDRATE_115200);
+	sci_init(SCI_ID2, g_ips_clk, 500000);
 	wdt_disable();
 	printf_version();
 
@@ -210,8 +210,6 @@ int main(void){
 	efm_clk = cpm_get_efmclk();
 	eflash_init(efm_clk);
 #ifdef CONF_DEBUG
-	u32 a[10]={1,2,3,4,5,6,7,8,9,10};
-	eflash_bulk_program(0x00400000,10,a);
 	eflash_recovery_to_rom();
 #endif
 
