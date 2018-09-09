@@ -7,7 +7,7 @@
 #include "alg_api.h"
 #include "alg_drv.h"
 
-#define __VER__  "1.0 RC-2"
+#define __VER__  "1.0 RC-3"
 #define DEBUG_BREAK asm("bkpt")
 #define PMSG(...) {if(!is_programmer)MSG(__VA_ARGS__);}
 #define DMSG(...) {if(is_programmer)MSG(__VA_ARGS__);}
@@ -24,7 +24,7 @@ u32 ds,dl;
 void show_help(){
 	//show help msg. only in cui mode
 	PMSG(__VER__
-			"Usage:\n\r"
+			"\n\rUsage:\n\r"
 			"\ti  -  View chip info\n\r"
 			"\th  -  Show this help\n\r"
 			"\ts  -  Set writing start point. \n\r");
@@ -161,7 +161,7 @@ u8 direct_write(){
 	}
 
 	//calculate SHA256
-	u8* sha256=(u8*)0x00820000;
+	u8* sha256=(u8*)0x00830000;
 	hash_init(MODE_SHA256);
 	sha_update(ds,dl);
 	hash_dofinal(MODE_SHA256,sha256);
@@ -175,6 +175,26 @@ u8 direct_write(){
 		else shaans[i*2+1]=lo+'A'-10;
 	}
 	shaans[64]=0;
+
+	// rewrite interrupt table
+	u8* vector = (u8*) 0x00820000;
+	for(i=0;i<4;i++)
+		vector[i] = eflash_byte_read(0x00400000+i);
+	for(i=0x100;i<0x200;i++)
+		vector[i] = eflash_byte_read(0x00400000+i);
+	ret_code = eflash_page_erase(0x00400000);
+	if(ret_code == EFLASH_PROG_ERASE_FAIL){
+		PMSG("Flash write error!\n\r");
+		DMSG("f4");
+		return 4;
+	}
+	ret_code = eflash_bulk_program(0x00400000,128,(u32*)vector);
+	if(ret_code == EFLASH_PROG_ERASE_FAIL){
+		PMSG("Flash write error!\n\r");
+		DMSG("f5");
+		return 5;
+	}
+
 	PMSG("Flash write ok! SHA256=%s\n\r",shaans);
 	DMSG("o%s",shaans);
 	return 0;
@@ -190,6 +210,8 @@ int main(void){
 	efm_clk = cpm_get_efmclk();
 	eflash_init(efm_clk);
 #ifdef CONF_DEBUG
+	u32 a[10]={1,2,3,4,5,6,7,8,9,10};
+	eflash_bulk_program(0x00400000,10,a);
 	eflash_recovery_to_rom();
 #endif
 
